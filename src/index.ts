@@ -13,6 +13,7 @@ import userRoutes from "./modules/user/user.routes";
 import recordRoutes from "./modules/record/record.routes";
 import { authorize } from "./middlewares/authorize";
 import { Role } from "./generated/prisma/enums";
+import dashboardRoutes from "./modules/dashboard/dashboard.routes";
 
 const app = express();
 app.use(cors());
@@ -24,9 +25,10 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/api/v1/auth", authRoutes);
-// ADMIN only
+// All users route is for ADMIN only
 app.use("/api/v1/users", verifyAuth, authorize(Role.ADMIN), userRoutes);
 app.use("/api/v1/records", verifyAuth, recordRoutes);
+app.use("/api/v1/dashboard", verifyAuth, dashboardRoutes);
 
 app.use((req, _res, _next) => {
   throw new AppError(
