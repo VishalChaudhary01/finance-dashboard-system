@@ -16,9 +16,7 @@ export const getUsers: RequestHandler = async (_req, res) => {
 };
 
 export const getUser: RequestHandler = async (req, res) => {
-  const userId = req.params.id as string;
-
-  const { user } = await getUserByIdService(userId);
+  const { user } = await getUserByIdService(req.params.id as string);
 
   res
     .status(StatusCode.OK)
@@ -34,8 +32,7 @@ export const createUser: RequestHandler = async (req, res) => {
 };
 
 export const updateUser: RequestHandler = async (req, res) => {
-  const id = req.params.id as string;
-  const { user } = await updateUserService(id, req.body);
+  const { user } = await updateUserService(req.params.id as string, req.body);
 
   res.status(StatusCode.OK).json({
     message: "User updated successfully",

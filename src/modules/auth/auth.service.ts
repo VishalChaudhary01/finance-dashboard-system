@@ -35,7 +35,7 @@ export const signupService = async (input: SignupInput) => {
 
 export const signinService = async (input: SigninInput) => {
   const user = await prisma.user.findFirst({
-    where: { email: input.email },
+    where: { email: input.email, status: "ACTIVE" },
   });
 
   if (!user) {

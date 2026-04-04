@@ -6,6 +6,7 @@ import { signinSchema, signupSchema } from "@/common/validators/auth.validator";
 
 const authRoutes = Router();
 
+// VIEWER + ANALYST + ADMIN
 authRoutes.post("/signup", inputValidator(signupSchema), signup);
 authRoutes.post("/signin", inputValidator(signinSchema), signin);
 authRoutes.post("/signout", verifyAuth, signout);

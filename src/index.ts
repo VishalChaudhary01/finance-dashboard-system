@@ -11,6 +11,8 @@ import { verifyAuth } from "./middlewares/verifyAuth";
 import authRoutes from "./modules/auth/auth.route";
 import userRoutes from "./modules/user/user.routes";
 import recordRoutes from "./modules/record/record.routes";
+import { authorize } from "./middlewares/authorize";
+import { Role } from "./generated/prisma/enums";
 
 const app = express();
 app.use(cors());
@@ -22,7 +24,8 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/users", verifyAuth, userRoutes);
+// ADMIN only
+app.use("/api/v1/users", verifyAuth, authorize(Role.ADMIN), userRoutes);
 app.use("/api/v1/records", verifyAuth, recordRoutes);
 
 app.use((req, _res, _next) => {
