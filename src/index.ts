@@ -7,9 +7,10 @@ import { errorhandler } from "./middlewares/errorHandler";
 import { AppError } from "./common/utils/appError";
 import { StatusCode } from "./config/statusCode";
 import { ErrorCode } from "./config/errorCode";
+import { verifyAuth } from "./middlewares/verifyAuth";
 import authRoutes from "./modules/auth/auth.route";
 import userRoutes from "./modules/user/user.routes";
-import { verifyAuth } from "./middlewares/verifyAuth";
+import recordRoutes from "./modules/record/record.routes";
 
 const app = express();
 app.use(cors());
@@ -22,6 +23,7 @@ app.get("/health", (_req, res) => {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", verifyAuth, userRoutes);
+app.use("/api/v1/records", verifyAuth, recordRoutes);
 
 app.use((req, _res, _next) => {
   throw new AppError(

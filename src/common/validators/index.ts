@@ -1,5 +1,5 @@
-import { Role, UserStatus } from "@/generated/prisma/enums";
 import { z } from "zod";
+import { Role, UserStatus } from "@/generated/prisma/enums";
 
 export const nameSchema = z
   .string("Name is required")
@@ -32,3 +32,29 @@ export const roleSchema = z.enum([Role.VIEWER, Role.ANALYST, Role.ADMIN], {
 export const statusSchema = z.enum([UserStatus.ACTIVE, UserStatus.INACTIVE], {
   errorMap: () => ({ message: "User Status must ACTIVE or INACTIVE" }),
 });
+
+export const transactionTypeSchema = z.enum(["INCOME", "EXPENSE"], {
+  errorMap: () => ({ message: "Type must be INCOME or EXPENSE" }),
+});
+
+export const amountSchema = z
+  .number("Amount is required")
+  .positive("Amount must be a positive number")
+  .multipleOf(0.01, "Amount must have at most 2 decimal places");
+
+export const categorySchema = z
+  .string("Category is required")
+  .trim()
+  .min(1, "Category cannot be empty")
+  .max(50, "Category must not exceed 50 characters");
+
+export const dateSchema = z
+  .string("Date is required")
+  .datetime({ message: "Date must be a valid ISO 8601 datetime" })
+  .transform((val) => new Date(val));
+
+export const noteSchema = z
+  .string()
+  .trim()
+  .max(500, "Notes must not exceed 500 characters")
+  .optional();
