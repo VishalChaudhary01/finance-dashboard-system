@@ -2,6 +2,8 @@
 
 A backend system for managing financial records with role-based access control, built with Node.js, TypeScript, Express, Prisma ORM, and PostgreSQL.
 
+### Postman Docs: https://documenter.getpostman.com/view/23177151/2sBXiqDU7E
+
 ## Tech Stack
 
 | Layer            | Choice                    |
