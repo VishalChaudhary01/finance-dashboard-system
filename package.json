@@ -6,7 +6,8 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "tsx src/index.ts",
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "seed": "npx prisma db seed"
   },
   "keywords": [],
   "author": "Vishal Chaudhary",

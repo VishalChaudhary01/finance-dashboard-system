@@ -1,3 +1,4 @@
+import { Role, UserStatus } from "@/generated/prisma/enums";
 import { z } from "zod";
 
 export const nameSchema = z
@@ -23,3 +24,11 @@ export const passwordSchema = z
     /[^A-Za-z0-9]/,
     "Password must contain at least one special character",
   );
+
+export const roleSchema = z.enum([Role.VIEWER, Role.ANALYST, Role.ADMIN], {
+  errorMap: () => ({ message: "Role must VIEWER, ANALYST, or ADMIN" }),
+});
+
+export const statusSchema = z.enum([UserStatus.ACTIVE, UserStatus.INACTIVE], {
+  errorMap: () => ({ message: "User Status must ACTIVE or INACTIVE" }),
+});

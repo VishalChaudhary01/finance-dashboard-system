@@ -8,6 +8,8 @@ import { AppError } from "./common/utils/appError";
 import { StatusCode } from "./config/statusCode";
 import { ErrorCode } from "./config/errorCode";
 import authRoutes from "./modules/auth/auth.route";
+import userRoutes from "./modules/user/user.routes";
+import { verifyAuth } from "./middlewares/verifyAuth";
 
 const app = express();
 app.use(cors());
@@ -19,6 +21,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", verifyAuth, userRoutes);
 
 app.use((req, _res, _next) => {
   throw new AppError(
