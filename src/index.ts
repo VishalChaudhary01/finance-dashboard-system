@@ -20,7 +20,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
-app.get("/health", (_req, res) => {
+app.get("/api/v1/health", (_req, res) => {
   res.status(200).json({ message: "Healthy server!" });
 });
 

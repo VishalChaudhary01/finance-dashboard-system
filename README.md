@@ -141,6 +141,8 @@ All routes are prefixed with `/api/v1`. Authentication uses HTTP-only cookies �
 
 **Single workspace** — The task does not mention multi-tenancy or organizations. All users share one system, differentiated only by role.
 
+**Create ADMIN User** — Run `npx prisma db seed` to create ADMIN user.
+
 **Public signup creates VIEWER** — Anyone can self-register and access the dashboard in read-only mode. Role elevation requires an Admin.
 
 **Soft delete for financial records** — Financial data is never hard-deleted. Records are flagged with `isDeleted: true` to preserve audit history, which is standard practice for finance systems.
@@ -149,4 +151,10 @@ All routes are prefixed with `/api/v1`. Authentication uses HTTP-only cookies �
 
 **Inactive user check on every request** — The `verifyAuth` middleware fetches the user from the database on each request. This ensures a deactivated user's existing JWT is immediately rejected, not just on next login. The minor performance overhead is acceptable for a finance system where security matters.
 
-**Pagination defaults** — Records default to `page=1, limit=10` if not specified. Maximum limit is capped at 100 to prevent accidental full-table fetches.
+**Promise.all for dashboard aggregation** — All five dashboard queries run in parallel, not sequentially. This minimizes response time for the combined/dashboard endpoint.
+
+**$queryRaw for trend queries** — Prisma's groupBy does not support date truncation functions like EXTRACT and DATE. Raw SQL is used intentionally here for monthly and weekly grouping, not as a workaround.
+
+**Prisma omit** — passwordHash is excluded at the query level using Prisma's omit option rather than a post-processing utility. This ensures the hash is never accidentally included in any response.
+
+**Pagination defaults** — Records default to `page=1, limit=10` if not specified.
