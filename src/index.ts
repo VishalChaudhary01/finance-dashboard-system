@@ -14,11 +14,14 @@ import recordRoutes from "./modules/record/record.routes";
 import { authorize } from "./middlewares/authorize";
 import { Role } from "./generated/prisma/enums";
 import dashboardRoutes from "./modules/dashboard/dashboard.routes";
+import { baseLimiter } from "./middlewares/rateLimiter";
 
 const app = express();
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
+
+app.use(baseLimiter);
 
 app.get("/api/v1/health", (_req, res) => {
   res.status(200).json({ message: "Healthy server!" });
