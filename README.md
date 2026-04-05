@@ -160,3 +160,5 @@ All routes are prefixed with `/api/v1`. Authentication uses HTTP-only cookies �
 **Prisma omit** — passwordHash is excluded at the query level using Prisma's omit option rather than a post-processing utility. This ensures the hash is never accidentally included in any response.
 
 **Pagination defaults** — Records default to `page=1, limit=10` if not specified.
+
+**Email notification** — Currently, when an admin creates a user, the user is not notified that their account has been created on the platform. We can integrate an email notification system. Whenever an admin creates a user (with name, email, password, and role), the system can automatically send an email to the user informing them that their account has been created. The email can also guide them on how to access their account, such as contacting the admin for credentials or setting their password securely.
